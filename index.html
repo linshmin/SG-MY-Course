@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>名片風水 × AI變現系統｜8小時實戰課程</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;700;900&family=Playfair+Display:wght@700;900&family=Bebas+Neue&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg:          #FFFFFF;
+    --bg-soft:     #F7F9FC;
+    --bg-muted:    #EEF2F7;
+    --ink:         #0F1C2E;
+    --ink-mid:     #4A5568;
+    --ink-light:   #8A9BB0;
+    --emerald:     #00A86B;
+    --emerald-dk:  #007A4D;
+    --emerald-lt:  #D6F5EB;
+    --sapphire:    #2563EB;
+    --sapphire-dk: #1A3FAF;
+    --sapphire-lt: #DBEAFE;
+    --amber:       #F59E0B;
+    --amber-dk:    #B45309;
+    --amber-lt:    #FEF3C7;
+    --coral:       #F43F5E;
+    --card-shadow: 0 4px 24px rgba(15,28,46,0.07);
+    --card-shadow-hover: 0 16px 48px rgba(15,28,46,0.14);
+    --radius: 20px;
+  }
+  * { margin:0;padding:0;box-sizing:border-box; }
+  html { scroll-behavior:smooth; }
+  body { background:var(--bg);color:var(--ink);font-family:'Noto Sans TC',sans-serif;overflow-x:hidden; }
+
+  /* HERO */
+  header {
+    min-height:100vh;display:flex;flex-direction:column;align-items:center;
+    justify-content:center;text-align:center;padding:80px 24px 100px;
+    position:relative;overflow:hidden;
+    background:linear-gradient(160deg,#FFFFFF 0%,#EEF6FF 50%,#E6FBF3 100%);
+  }
+  header::before {
+    content:'';position:absolute;width:700px;height:700px;border-radius:50%;
+    background:radial-gradient(circle,rgba(0,168,107,0.08) 0%,transparent 70%);
+    top:-200px;right:-200px;pointer-events:none;
+  }
+  header::after {
+    content:'';position:absolute;width:500px;height:500px;border-radius:50%;
+    background:radial-gradient(circle,rgba(37,99,235,0.07) 0%,transparent 70%);
+    bottom:-150px;left:-150px;pointer-events:none;
+  }
+  .orb { position:absolute;border-radius:50%;filter:blur(60px);animation:float 9s ease-in-out infinite;pointer-events:none; }
+  .orb1 { width:340px;height:340px;background:rgba(0,168,107,0.12);top:-80px;left:-80px;animation-delay:0s; }
+  .orb2 { width:260px;height:260px;background:rgba(37,99,235,0.10);bottom:-60px;right:-60px;animation-delay:3s; }
+  .orb3 { width:180px;height:180px;background:rgba(245,158,11,0.10);top:35%;left:65%;animation-delay:5.5s; }
+
+  .hero-badge {
+    display:inline-flex;align-items:center;gap:8px;
+    background:var(--emerald-lt);border:1.5px solid var(--emerald);
+    border-radius:100px;padding:8px 22px;font-size:0.8rem;
+    letter-spacing:2px;text-transform:uppercase;color:var(--emerald-dk);
+    font-weight:700;margin-bottom:32px;animation:fadeDown 0.8s ease both;
+    position:relative;z-index:1;
+  }
+  .hero-main-title {
+    font-family:'Playfair Display',serif;font-size:clamp(2.8rem,8vw,5.8rem);
+    font-weight:900;line-height:1.1;animation:fadeUp 0.9s ease 0.1s both;
+    position:relative;z-index:1;margin-bottom:10px;
+    background:linear-gradient(135deg,var(--ink) 0%,var(--emerald-dk) 45%,var(--sapphire) 100%);
+    -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  }
+  .hero-sub-title {
+    font-family:'Bebas Neue',sans-serif;font-size:clamp(1.3rem,3.5vw,2.2rem);
+    letter-spacing:7px;color:var(--sapphire);animation:fadeUp 0.9s ease 0.2s both;
+    margin-bottom:28px;position:relative;z-index:1;
+  }
+  .hero-desc {
+    max-width:640px;font-size:1.05rem;line-height:2;color:var(--ink-mid);
+    animation:fadeUp 0.9s ease 0.3s both;margin-bottom:48px;position:relative;z-index:1;
+  }
+  .hero-cta-group {
+    display:flex;gap:14px;flex-wrap:wrap;justify-content:center;
+    animation:fadeUp 0.9s ease 0.4s both;position:relative;z-index:1;
+  }
+
+  /* BUTTONS */
+  .btn-primary {
+    background:linear-gradient(135deg,var(--emerald),#00C97F);color:#fff;
+    font-weight:900;font-size:1rem;padding:16px 38px;border-radius:100px;
+    border:none;cursor:pointer;text-decoration:none;display:inline-flex;
+    align-items:center;gap:8px;transition:transform 0.22s,box-shadow 0.22s;
+    box-shadow:0 8px 28px rgba(0,168,107,0.35);letter-spacing:0.5px;
+  }
+  .btn-primary:hover { transform:translateY(-3px) scale(1.03);box-shadow:0 16px 44px rgba(0,168,107,0.45); }
+  .btn-secondary {
+    background:#fff;color:var(--sapphire);font-weight:700;font-size:1rem;
+    padding:15px 36px;border-radius:100px;border:2px solid var(--sapphire);
+    cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;
+    gap:8px;transition:transform 0.22s,background 0.22s,color 0.22s;letter-spacing:0.5px;
+  }
+  .btn-secondary:hover { background:var(--sapphire);color:#fff;transform:translateY(-3px); }
+
+  /* INFO STRIP */
+  .info-strip { display:flex;justify-content:center;flex-wrap:wrap;background:var(--ink);border-top:4px solid var(--emerald); }
+  .info-item {
+    display:flex;align-items:center;gap:12px;padding:20px 32px;
+    flex:1;min-width:180px;justify-content:center;
+    border-right:1px solid rgba(255,255,255,0.08);
+  }
+  .info-item:last-child { border-right:none; }
+  .info-icon { font-size:1.5rem; }
+  .info-label { color:rgba(255,255,255,0.45);font-size:0.75rem;display:block;letter-spacing:1px; }
+  .info-value { color:#fff;font-weight:700;font-size:1rem; }
+
+  /* SECTIONS */
+  .section { padding:90px 24px;max-width:1100px;margin:0 auto; }
+  .section-eyebrow {
+    font-family:'Bebas Neue',sans-serif;letter-spacing:4px;font-size:0.88rem;
+    color:var(--emerald);margin-bottom:10px;display:flex;align-items:center;gap:10px;
+  }
+  .section-eyebrow::before { content:'';width:28px;height:2.5px;background:var(--emerald);display:inline-block;border-radius:2px; }
+  .section-title {
+    font-family:'Playfair Display',serif;font-size:clamp(1.9rem,5vw,3rem);
+    font-weight:900;line-height:1.22;color:var(--ink);margin-bottom:14px;
+  }
+  .section-sub { color:var(--ink-mid);font-size:1rem;line-height:1.85;max-width:580px;margin-bottom:52px; }
+
+  /* CORE CARDS */
+  .core-grid { display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:22px; }
+  .core-card {
+    background:#fff;border:1px solid rgba(15,28,46,0.07);border-radius:var(--radius);
+    padding:36px 30px;position:relative;overflow:hidden;
+    transition:transform 0.3s,box-shadow 0.3s;box-shadow:var(--card-shadow);
+  }
+  .core-card:hover { transform:translateY(-7px);box-shadow:var(--card-shadow-hover); }
+  .core-card::before { content:'';position:absolute;top:0;left:0;right:0;height:4px;border-radius:var(--radius) var(--radius) 0 0; }
+  .core-card:nth-child(1)::before { background:linear-gradient(90deg,var(--emerald),var(--amber)); }
+  .core-card:nth-child(2)::before { background:linear-gradient(90deg,var(--sapphire),var(--emerald)); }
+  .core-card:nth-child(3)::before { background:linear-gradient(90deg,var(--amber),var(--sapphire)); }
+  .card-num { font-family:'Bebas Neue',sans-serif;font-size:5.5rem;line-height:1;position:absolute;top:12px;right:22px;color:var(--ink);opacity:0.04; }
+  .card-icon { font-size:2.2rem;margin-bottom:16px;display:block; }
+  .card-tag { display:inline-block;font-size:0.72rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;border-radius:100px;padding:4px 13px;margin-bottom:13px; }
+  .core-card:nth-child(1) .card-tag { background:var(--emerald-lt);color:var(--emerald-dk);border:1px solid var(--emerald); }
+  .core-card:nth-child(2) .card-tag { background:var(--sapphire-lt);color:var(--sapphire-dk);border:1px solid var(--sapphire); }
+  .core-card:nth-child(3) .card-tag { background:var(--amber-lt);color:var(--amber-dk);border:1px solid var(--amber); }
+  .card-title { font-family:'Playfair Display',serif;font-size:1.35rem;font-weight:700;color:var(--ink);margin-bottom:16px;line-height:1.38; }
+  .card-list { list-style:none;margin-bottom:20px; }
+  .card-list li { padding:7px 0;color:var(--ink-mid);font-size:0.88rem;display:flex;gap:8px;align-items:flex-start;border-bottom:1px solid var(--bg-muted); }
+  .card-list li:last-child { border-bottom:none; }
+  .card-list li::before { content:'▸';flex-shrink:0;margin-top:1px; }
+  .core-card:nth-child(1) .card-list li::before { color:var(--emerald); }
+  .core-card:nth-child(2) .card-list li::before { color:var(--sapphire); }
+  .core-card:nth-child(3) .card-list li::before { color:var(--amber); }
+  .card-cta { font-size:0.86rem;font-weight:700;padding:11px 18px;border-radius:12px;display:inline-block; }
+  .core-card:nth-child(1) .card-cta { background:var(--emerald-lt);color:var(--emerald-dk); }
+  .core-card:nth-child(2) .card-cta { background:var(--sapphire-lt);color:var(--sapphire-dk); }
+  .core-card:nth-child(3) .card-cta { background:var(--amber-lt);color:var(--amber-dk); }
+
+  /* RESULTS */
+  .results-section {
+    background:linear-gradient(135deg,var(--emerald-lt),var(--sapphire-lt));
+    border:1.5px solid rgba(0,168,107,0.25);border-radius:28px;
+    padding:56px 44px;text-align:center;position:relative;overflow:hidden;
+  }
+  .results-section::before { content:'✦';font-size:18rem;position:absolute;top:-40px;right:-20px;color:var(--emerald);opacity:0.04;pointer-events:none; }
+  .results-preview {
+    display:inline-flex;align-items:center;gap:10px;background:#fff;
+    border:1.5px solid var(--emerald);border-radius:14px;padding:14px 26px;
+    margin-top:22px;font-size:0.85rem;color:var(--emerald-dk);text-decoration:none;
+    font-weight:600;transition:background 0.2s,transform 0.2s;word-break:break-all;
+    box-shadow:0 4px 16px rgba(0,168,107,0.12);
+  }
+  .results-preview:hover { background:var(--emerald-lt);transform:translateY(-2px); }
+  .results-tags { display:flex;flex-wrap:wrap;gap:12px;justify-content:center;margin-top:32px; }
+  .result-tag { padding:9px 22px;border-radius:100px;font-size:0.88rem;font-weight:700; }
+  .result-tag.green  { background:var(--emerald-lt);color:var(--emerald-dk);border:1.5px solid var(--emerald); }
+  .result-tag.blue   { background:var(--sapphire-lt);color:var(--sapphire-dk);border:1.5px solid var(--sapphire); }
+  .result-tag.yellow { background:var(--amber-lt);color:var(--amber-dk);border:1.5px solid var(--amber); }
+
+  /* BENEFITS */
+  .benefits-grid { display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:18px; }
+  .benefit-item {
+    background:#fff;border:1px solid rgba(15,28,46,0.07);border-radius:18px;
+    padding:26px 22px;display:flex;gap:14px;align-items:flex-start;
+    transition:transform 0.22s,box-shadow 0.22s;box-shadow:var(--card-shadow);
+  }
+  .benefit-item:hover { transform:translateY(-4px);box-shadow:var(--card-shadow-hover); }
+  .benefit-icon { width:46px;height:46px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:1.3rem;flex-shrink:0; }
+  .benefit-item:nth-child(1) .benefit-icon { background:var(--emerald-lt); }
+  .benefit-item:nth-child(2) .benefit-icon { background:var(--sapphire-lt); }
+  .benefit-item:nth-child(3) .benefit-icon { background:var(--amber-lt); }
+  .benefit-item:nth-child(4) .benefit-icon { background:var(--emerald-lt); }
+  .benefit-text strong { display:block;font-size:0.96rem;font-weight:700;color:var(--ink);margin-bottom:5px; }
+  .benefit-text span { font-size:0.82rem;color:var(--ink-light);line-height:1.65; }
+
+  /* FLOW */
+  .highlight-statement {
+    background:var(--ink);border-radius:28px;padding:64px 52px;
+    text-align:center;position:relative;overflow:hidden;margin-bottom:60px;
+  }
+  .highlight-statement::before { content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(0,168,107,0.12) 0%,rgba(37,99,235,0.12) 100%);pointer-events:none; }
+  .hs-eyebrow { font-family:'Bebas Neue',sans-serif;letter-spacing:5px;font-size:0.85rem;color:var(--emerald);margin-bottom:18px;position:relative; }
+  .hs-main { font-family:'Playfair Display',serif;font-size:clamp(1.8rem,5vw,3rem);font-weight:900;line-height:1.28;color:#fff;margin-bottom:20px;position:relative; }
+  .hs-main .accent-green { color:var(--emerald); }
+  .hs-sub { font-size:1rem;color:rgba(255,255,255,0.55);line-height:1.8;max-width:560px;margin:0 auto 36px;position:relative; }
+  .hs-flow { display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:8px;position:relative; }
+  .flow-node { padding:10px 20px;border-radius:10px;font-size:0.9rem;font-weight:700; }
+  .flow-node.green  { background:rgba(0,168,107,0.18);color:#6EE7B7;border:1px solid rgba(0,168,107,0.4); }
+  .flow-node.blue   { background:rgba(37,99,235,0.18);color:#93C5FD;border:1px solid rgba(37,99,235,0.4); }
+  .flow-node.yellow { background:rgba(245,158,11,0.18);color:#FCD34D;border:1px solid rgba(245,158,11,0.4); }
+  .flow-arrow { color:rgba(255,255,255,0.25);font-size:1.2rem; }
+
+  /* PRICING */
+  .pricing-section {
+    background:var(--ink);border-radius:28px;padding:60px 48px;text-align:center;
+    position:relative;overflow:hidden;box-shadow:0 20px 60px rgba(15,28,46,0.15);
+  }
+  .pricing-section::before { content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(0,168,107,0.10) 0%,rgba(37,99,235,0.10) 100%);pointer-events:none; }
+  .pricing-section::after { content:'';position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,var(--emerald),var(--amber),var(--sapphire)); }
+  .pricing-badge {
+    position:absolute;top:22px;right:22px;
+    background:linear-gradient(135deg,var(--coral),#FF8A65);color:#fff;
+    font-weight:900;font-size:0.76rem;letter-spacing:1.5px;
+    padding:7px 16px;border-radius:100px;text-transform:uppercase;
+    animation:pulse 2s ease infinite;z-index:2;
+  }
+  .price-main {
+    font-family:'Bebas Neue',sans-serif;font-size:clamp(4rem,10vw,7rem);line-height:1;
+    letter-spacing:2px;background:linear-gradient(135deg,var(--amber),var(--emerald));
+    -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+    margin-bottom:4px;position:relative;
+  }
+  .price-sub { color:rgba(255,255,255,0.45);font-size:0.88rem;margin-bottom:28px;position:relative; }
+  .pricing-includes { display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin:24px 0 32px;position:relative; }
+  .price-include-item {
+    display:flex;align-items:center;gap:8px;background:rgba(255,255,255,0.07);
+    border:1px solid rgba(255,255,255,0.12);border-radius:100px;padding:8px 18px;
+    font-size:0.84rem;color:rgba(255,255,255,0.75);
+  }
+  .dot { width:8px;height:8px;border-radius:50%;flex-shrink:0; }
+  .dot-green  { background:var(--emerald); }
+  .dot-yellow { background:var(--amber); }
+  .dot-blue   { background:#93C5FD; }
+  .guarantee-row { display:flex;flex-wrap:wrap;gap:14px;justify-content:center;margin-top:26px;position:relative; }
+  .guarantee-item { display:flex;align-items:center;gap:7px;font-size:0.87rem;color:rgba(255,255,255,0.65);font-weight:600; }
+  .guarantee-item::before { content:'✔';color:var(--emerald);font-size:0.95rem; }
+
+  /* TARGET */
+  .target-grid { display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:16px; }
+  .target-card {
+    background:#fff;border:1.5px solid var(--bg-muted);border-radius:18px;
+    padding:28px 20px;text-align:center;transition:transform 0.22s,border-color 0.22s,box-shadow 0.22s;
+    box-shadow:var(--card-shadow);
+  }
+  .target-card:hover { transform:translateY(-5px);border-color:var(--emerald);box-shadow:0 12px 36px rgba(0,168,107,0.12); }
+  .target-emoji { font-size:2.2rem;margin-bottom:12px;display:block; }
+  .target-label { font-size:0.9rem;font-weight:600;color:var(--ink-mid);line-height:1.55; }
+
+  /* FINAL CTA */
+  .final-cta { text-align:center;padding:80px 24px 100px;max-width:960px;margin:0 auto; }
+  .big-statement {
+    background:linear-gradient(145deg,#F0FDF9,#EFF6FF);
+    border:2px solid rgba(0,168,107,0.2);border-radius:32px;
+    padding:72px 52px;position:relative;overflow:hidden;margin-bottom:48px;
+  }
+  .big-statement::before { content:'🔥';font-size:10rem;position:absolute;top:-30px;left:-20px;opacity:0.05;pointer-events:none; }
+  .big-statement-label {
+    display:inline-flex;align-items:center;gap:8px;
+    background:rgba(244,63,94,0.08);border:1.5px solid rgba(244,63,94,0.35);
+    border-radius:100px;padding:6px 20px;font-size:0.78rem;letter-spacing:2px;
+    text-transform:uppercase;color:var(--coral);font-weight:700;margin-bottom:22px;position:relative;
+  }
+  .big-statement h2 {
+    font-family:'Playfair Display',serif;font-size:clamp(1.7rem,4.5vw,2.8rem);
+    font-weight:900;line-height:1.3;color:var(--ink);margin-bottom:24px;position:relative;
+  }
+  .highlight-box { display:inline;background:linear-gradient(135deg,var(--emerald-lt),var(--sapphire-lt));border-radius:6px;padding:2px 10px;color:var(--emerald-dk); }
+  .big-statement-sub { font-size:1rem;color:var(--ink-mid);line-height:1.8;max-width:540px;margin:0 auto 34px;position:relative; }
+  .triple-highlight { display:flex;justify-content:center;flex-wrap:wrap;gap:10px;margin-bottom:36px;position:relative; }
+  .triple-item { font-size:1.1rem;font-weight:900;padding:11px 24px;border-radius:12px; }
+  .triple-item.green  { background:var(--emerald-lt);color:var(--emerald-dk);border:2px solid var(--emerald); }
+  .triple-item.yellow { background:var(--amber-lt);color:var(--amber-dk);border:2px solid var(--amber); }
+  .triple-item.blue   { background:var(--sapphire-lt);color:var(--sapphire-dk);border:2px solid var(--sapphire); }
+  .symbol { font-size:1.3rem;color:var(--ink-light);display:flex;align-items:center; }
+  .limited-badge {
+    display:inline-flex;align-items:center;gap:10px;
+    background:rgba(244,63,94,0.08);border:2px solid rgba(244,63,94,0.35);
+    border-radius:100px;padding:13px 32px;font-size:1.1rem;font-weight:900;
+    color:var(--coral);letter-spacing:1px;animation:pulse 2s ease infinite;position:relative;
+  }
+
+  /* LINE CTA */
+  .line-cta {
+    background:linear-gradient(135deg,#00B900,#00D21B);border-radius:26px;
+    padding:52px 40px;text-align:center;position:relative;overflow:hidden;
+    box-shadow:0 20px 60px rgba(0,185,0,0.22);
+  }
+  .line-cta::before { content:'';position:absolute;top:-50%;left:-50%;width:200%;height:200%;background:radial-gradient(circle,rgba(255,255,255,0.1) 0%,transparent 60%);animation:shimmer 5s linear infinite;pointer-events:none; }
+  .line-logo { font-size:3rem;margin-bottom:10px;position:relative; }
+  .line-title { font-family:'Playfair Display',serif;font-size:1.75rem;font-weight:900;color:#fff;margin-bottom:8px;position:relative; }
+  .line-sub { font-size:0.88rem;color:rgba(255,255,255,0.75);margin-bottom:26px;position:relative; }
+  .line-btn {
+    display:inline-flex;align-items:center;gap:10px;background:#fff;color:#00A000;
+    font-weight:900;font-size:1rem;padding:16px 42px;border-radius:100px;
+    text-decoration:none;transition:transform 0.22s,box-shadow 0.22s;
+    letter-spacing:0.5px;position:relative;
+  }
+  .line-btn:hover { transform:translateY(-3px) scale(1.03);box-shadow:0 16px 40px rgba(0,0,0,0.18); }
+
+  /* DIVIDER / FOOTER */
+  .divider { max-width:1100px;margin:0 auto;border:none;border-top:1.5px solid var(--bg-muted); }
+  footer { text-align:center;padding:40px 24px;border-top:1.5px solid var(--bg-muted);color:var(--ink-light);font-size:0.82rem;background:var(--bg-soft); }
+  footer span { color:var(--emerald-dk);font-weight:700; }
+
+  /* ANIMATIONS */
+  @keyframes fadeDown { from{opacity:0;transform:translateY(-20px);}to{opacity:1;transform:translateY(0);} }
+  @keyframes fadeUp   { from{opacity:0;transform:translateY(28px);}to{opacity:1;transform:translateY(0);} }
+  @keyframes float    { 0%,100%{transform:translateY(0)scale(1);}50%{transform:translateY(-28px)scale(1.05);} }
+  @keyframes pulse    { 0%,100%{opacity:1;}50%{opacity:0.68;} }
+  @keyframes shimmer  { from{transform:rotate(0deg);}to{transform:rotate(360deg);} }
+  .reveal { opacity:0;transform:translateY(28px);transition:opacity 0.7s ease,transform 0.7s ease; }
+  .reveal.visible { opacity:1;transform:translateY(0); }
+
+  @media (max-width:768px) {
+    .section { padding:60px 18px; }
+    .info-item { min-width:140px;padding:14px 14px; }
+    .results-section,.pricing-section,.big-statement,.highlight-statement { padding:36px 22px; }
+    .core-card { padding:26px 20px; }
+    .highlight-statement { padding:44px 24px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<header>
+  <div class="orb orb1"></div>
+  <div class="orb orb2"></div>
+  <div class="orb orb3"></div>
+  <div class="hero-badge">🌟 新加坡/馬來西亞 限定課程 · 限額招生中</div>
+  <h1 class="hero-main-title">名片風水<br>× AI變現系統</h1>
+  <div class="hero-sub-title">8 小時完整實戰課程</div>
+  <p class="hero-desc">
+    在這個競爭激烈的時代，<br>
+    一張名片，不只是聯絡工具，<br>
+    而是影響成交、建立信任、<strong style="color:var(--amber-dk)">創造財富的關鍵入口</strong>。
+  </p>
+  <div class="hero-cta-group">
+    <a href="https://lin.ee/P5TYN5k" target="_blank" class="btn-primary">🔥 加LINE諮詢</a>
+    <a href="#core" class="btn-secondary">📚 查看課程內容</a>
+  </div>
+</header>
+
+<!-- INFO STRIP -->
+<div class="info-strip">
+  <div class="info-item">
+    <span class="info-icon">⏰</span>
+    <div><span class="info-label">課程時長</span><span class="info-value">8 小時完整實戰</span></div>
+  </div>
+  <div class="info-item">
+    <span class="info-icon">💵</span>
+    <div><span class="info-label">課程費用</span><span class="info-value">RM 1,000 / 人</span></div>
+  </div>
+  <div class="info-item">
+    <span class="info-icon">📍</span>
+    <div><span class="info-label">上課地點</span><span class="info-value">馬來西亞（實體）</span></div>
+  </div>
+  <div class="info-item">
+    <span class="info-icon">👥</span>
+    <div><span class="info-label">開班條件</span><span class="info-value">滿 10 人即開班</span></div>
+  </div>
+</div>
+
+<!-- CORE MODULES -->
+<div class="section" id="core">
+  <div class="section-eyebrow">課程三大核心</div>
+  <h2 class="section-title reveal">三大核心模組<br>全面打造你的商業系統</h2>
+  <p class="section-sub reveal">不只是設計課，而是一套從形象到流量、從名片到收入的完整系統。</p>
+  <div class="core-grid">
+    <div class="core-card reveal">
+      <span class="card-num">01</span>
+      <span class="card-icon">🧭</span>
+      <span class="card-tag">理論基礎</span>
+      <h3 class="card-title">《名片風水理論基礎》</h3>
+      <ul class="card-list">
+        <li>名片如何影響財運、人脈與成交機率</li>
+        <li>版面配置、顏色、元素背後的能量邏輯</li>
+        <li>打造讓客戶願意留下、願意聯絡的第一印象</li>
+      </ul>
+      <span class="card-cta">👉 讓名片成為你的「業績入口」</span>
+    </div>
+    <div class="core-card reveal">
+      <span class="card-num">02</span>
+      <span class="card-icon">🎨</span>
+      <span class="card-tag">實務設計</span>
+      <h3 class="card-title">《名片實務設計教學》</h3>
+      <ul class="card-list">
+        <li>現場教學：設計一張真正會成交的名片</li>
+        <li>視覺結構 × 行銷思維 × 人性心理</li>
+        <li>從0到1完成屬於你的專業名片作品</li>
+      </ul>
+      <span class="card-cta">👉 不只學理論，而是「當場出成果」</span>
+    </div>
+    <div class="core-card reveal">
+      <span class="card-num">03</span>
+      <span class="card-icon">🚀</span>
+      <span class="card-tag">AI上線實戰</span>
+      <h3 class="card-title">《AI網站設計與上線實戰》</h3>
+      <ul class="card-list">
+        <li>使用AI快速生成專屬個人品牌網站</li>
+        <li>將名片作品上架到網路，打造曝光入口</li>
+        <li>建立「讓客戶主動找到你」的線上系統</li>
+      </ul>
+      <span class="card-cta">👉 名片 → 網頁 → 客戶完整轉單流程</span>
+    </div>
+  </div>
+</div>
+
+<hr class="divider">
+
+<!-- RESULTS -->
+<div style="background:var(--bg-soft);padding:1px 0;">
+<div class="section">
+  <div class="section-eyebrow">成果展示</div>
+  <h2 class="section-title reveal">你看得到的真實成果</h2>
+  <div class="results-section reveal">
+    <p style="font-size:1rem;color:var(--ink-mid);margin-bottom:10px;font-weight:600;">參考學員可達成果</p>
+    <a href="https://linshmin.github.io/SHMIN-Studio-Card-Energy-Design/" target="_blank" class="results-preview">
+      🔗 https://linshmin.github.io/SHMIN-Studio-Card-Energy-Design/
+    </a>
+    <p style="margin-top:36px;font-size:0.95rem;color:var(--ink-light);">上完課，你也能擁有：</p>
+    <div class="results-tags">
+      <span class="result-tag green">✦ 個人名片設計</span>
+      <span class="result-tag blue">✦ 專屬品牌展示網站</span>
+      <span class="result-tag yellow">✦ 線上曝光入口</span>
+    </div>
+  </div>
+</div>
+</div>
+
+<hr class="divider">
+
+<!-- BENEFITS -->
+<div class="section">
+  <div class="section-eyebrow">課程帶給你什麼</div>
+  <h2 class="section-title reveal">四大核心收穫</h2>
+  <p class="section-sub reveal">一堂課，讓你從被動等待客戶，變成持續吸引客戶上門。</p>
+  <div class="benefits-grid">
+    <div class="benefit-item reveal">
+      <div class="benefit-icon">💎</div>
+      <div class="benefit-text"><strong>提升個人品牌專業度</strong><span>讓每一次曝光都為你建立專業形象，脫穎而出。</span></div>
+    </div>
+    <div class="benefit-item reveal">
+      <div class="benefit-icon">🤝</div>
+      <div class="benefit-text"><strong>強化客戶信任感</strong><span>第一印象決定成交機率，讓名片為你說話。</span></div>
+    </div>
+    <div class="benefit-item reveal">
+      <div class="benefit-icon">🌐</div>
+      <div class="benefit-text"><strong>擁有持續曝光的線上平台</strong><span>24小時自動為你引流，讓客戶主動找上門。</span></div>
+    </div>
+    <div class="benefit-item reveal">
+      <div class="benefit-icon">💰</div>
+      <div class="benefit-text"><strong>打造可變現的設計能力</strong><span>學以致用，立刻能接案、能服務、能賺錢。</span></div>
+    </div>
+  </div>
+</div>
+
+<hr class="divider">
+
+<!-- FLOW -->
+<div class="section">
+  <div class="highlight-statement reveal">
+    <div class="hs-eyebrow">完整轉化流程</div>
+    <h2 class="hs-main">從名片出發<br>建立完整的<span class="accent-green">商業閉環</span></h2>
+    <p class="hs-sub">一套系統，讓你的個人品牌自動運轉、持續引流、穩定變現。</p>
+    <div class="hs-flow">
+      <span class="flow-node green">🧭 名片風水</span>
+      <span class="flow-arrow">→</span>
+      <span class="flow-node blue">🎨 視覺設計</span>
+      <span class="flow-arrow">→</span>
+      <span class="flow-node yellow">🌐 線上曝光</span>
+      <span class="flow-arrow">→</span>
+      <span class="flow-node green">💰 商業變現</span>
+    </div>
+  </div>
+</div>
+
+<!-- PRICING -->
+<div class="section">
+  <div class="section-eyebrow">課程資訊</div>
+  <h2 class="section-title reveal">投資你的未來</h2>
+  <div class="pricing-section reveal">
+    <div class="pricing-badge">🔥 限額 15 人</div>
+    <p style="color:rgba(255,255,255,0.45);font-size:0.85rem;margin-bottom:8px;position:relative;">每人課程費用</p>
+    <div class="price-main">RM 1,000</div>
+    <p class="price-sub">8 小時完整實戰 · 馬來西亞實體課程</p>
+    <div class="pricing-includes">
+      <span class="price-include-item"><span class="dot dot-green"></span>完整課程內容</span>
+      <span class="price-include-item"><span class="dot dot-blue"></span>專屬講義資料</span>
+      <span class="price-include-item"><span class="dot dot-yellow"></span>風水套卡 × 2張</span>
+    </div>
+
+    <div class="guarantee-row">
+      <span class="guarantee-item">滿10人即可開班</span>
+      <span class="guarantee-item">完成專屬名片設計</span>
+      <span class="guarantee-item">個人網站成功上線</span>
+    </div>
+  </div>
+</div>
+
+<hr class="divider">
+
+<!-- TARGET -->
+<div style="background:var(--bg-soft);padding:1px 0;">
+<div class="section">
+  <div class="section-eyebrow">適合對象</div>
+  <h2 class="section-title reveal">你適合來上這堂課嗎？</h2>
+  <p class="section-sub reveal">只要你想提升形象、拓展客源、打造個人品牌，這堂課就是為你而設計的。</p>
+  <div class="target-grid">
+    <div class="target-card reveal"><span class="target-emoji">💼</span><span class="target-label">想提升個人品牌<br>與專業形象者</span></div>
+    <div class="target-card reveal"><span class="target-emoji">🎨</span><span class="target-label">設計師<br>想升級服務價值</span></div>
+    <div class="target-card reveal"><span class="target-emoji">📊</span><span class="target-label">業務人員<br>想提高成交率</span></div>
+    <div class="target-card reveal"><span class="target-emoji">🚀</span><span class="target-label">創業者<br>想打造品牌曝光</span></div>
+    <div class="target-card reveal"><span class="target-emoji">🤖</span><span class="target-label">想用AI打造<br>個人曝光與接案能力</span></div>
+  </div>
+</div>
+</div>
+
+<hr class="divider">
+
+<!-- FINAL CTA -->
+<div class="final-cta">
+  <div class="big-statement reveal">
+    <div class="big-statement-label">🔥 一句話總結</div>
+    <h2>這不只是一堂<span class="highlight-box">設計課</span>，<br>而是一套讓你</h2>
+    <div class="triple-highlight">
+      <span class="triple-item green">✦ 形象升級</span>
+      <span class="symbol">×</span>
+      <span class="triple-item yellow">✦ 流量提升</span>
+      <span class="symbol">×</span>
+      <span class="triple-item blue">✦ 收入放大</span>
+    </div>
+    <p class="big-statement-sub">的完整實戰系統。<br>一次學習，終身受益。</p>
+    <div class="limited-badge">🔴 限額 15 人｜額滿即止</div>
+  </div>
+  <div class="line-cta reveal">
+    <div class="line-logo">💬</div>
+    <h3 class="line-title">立即加LINE，搶佔你的名額！</h3>
+    <p class="line-sub">點擊下方按鈕，讓我們為你服務</p>
+    <a href="https://lin.ee/P5TYN5k" target="_blank" class="line-btn">➕ 加入LINE開始諮詢</a>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <p>© 2025 名片風水能量學 × AI變現系統 · <span>建安學院認證講師</span></p>
+  <p style="margin-top:8px;">實體課程 · 8小時完整實戰 </p>
+</footer>
+
+<script>
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        const idx = Array.from(reveals).indexOf(entry.target) % 4;
+        setTimeout(() => entry.target.classList.add('visible'), idx * 90);
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+  reveals.forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
